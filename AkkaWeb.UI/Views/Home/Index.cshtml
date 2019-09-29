@@ -1,0 +1,53 @@
+﻿@model AkkaWeb.UI.Models.IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">World's Shittest Bank</h1>
+    <p>
+        Still probably better than investing in tech stocks atm
+    </p>
+
+    @Html.ActionLink("Add Customer", "Create", "Customer")
+
+    <h2 style="text-align: left;">
+        Balances
+    </h2>
+
+    <table cellpadding="8">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Balance
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var kvp in Model.BalanceSheet.Balances)
+            {
+                string balanceId = $"CustomerBalance{kvp.Key}";
+                <tr>
+                    <td>
+                        @kvp.Key
+                    </td>
+                    <td>
+                        <span id="@balanceId">@kvp.Value.ToString("N")</span>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Add random amount", "AddRandom", "Customer", new { customerId = kvp.Key })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/lib/aspnet-signalr/signalr.js"></script>
+<script src="~/js/balance.js"></script>
